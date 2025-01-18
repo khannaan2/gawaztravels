@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore UAE - Travel & Tourism</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            position: relative;
+            background: url('dubai.jpg') center/cover;
+            padding: 60px 20px;
+            color: white;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            flex-wrap: wrap;
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header-text {
+            flex: 1;
+            margin-left: 60px;
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+            margin: 0;
+        }
+
+        header p {
+            font-size: 1.2em;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+            margin: 0;
+        }
+
+        .section {
+            padding: 30px 20px;
+            margin: 20px auto;
+            max-width: 1200px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+
+        }
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.2s ease-in-out;
+            width: 300px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card h3 {
+            padding: 10px;
+            font-size: 1.1em;
+            color: #555;
+        }
+
+        .airport-service img {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+            display: block;
+            border-radius: 8px;
+        }
+
+        .airport-service p {
+            text-align: center;
+            font-size: 1em;
+            color: #000000;
+            margin-top: 10px;
+        }
+
+        #attractions {
+            display: none;
+        }
+
+        .prev {
+            left: 10px;
+        }
+
+        .next {
+            right: 10px;
+        }
+
+        .content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .floating-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #ffcc00;
+            color: #333;
+            border: none;
+            border-radius: 50%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1000;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+
+        .floating-button:hover {
+            transform: scale(1.1);
+            background-color: #ffc107;
+        }
+
+        .contact-popup {
+            display: none;
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            white-space: nowrap;
+            z-index: 1000;
+        }
+
+        .contact-popup p {
+            margin: 0;
+            font-size: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        .logo {
+            height: 200px;
+            width: auto;      
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="header-content">
+            <div class="header-text">
+                <h1>Welcome to Gawāz Travel and Tourism</h1>
+                <p>Explore the Best Places Across the Emirates</p>
+            </div>
+            <img src="gawaz-dark.png" class="logo" alt="logo.png">
+        </div>
+    </header>
+
+
+    <!-- Floating Button -->
+    <button class="floating-button" onclick="togglePopup()">Contact Us</button>
+
+    <!-- Contact Popup -->
+    <div class="contact-popup" id="contactPopup">
+        <p>📞 +1111111111</p>
+    </div>
+
+
+    <div class="section airport-service">
+        <h2>Airport Pick & Drop Service</h2>
+        <img src="taksi.jpg" alt="Airport Service">
+        <p>Available for all airports in UAE. Contact us for seamless travel!</p>
+    </div>
+
+    <div class="section">
+        <h2>Select Your Destination</h2>
+        <div class="card-container">
+            <div class="card" onclick="showAttractions('dubai')">
+                <img src="dubai.jpg" alt="Dubai">
+                <h3>Dubai</h3>
+            </div>
+            <div class="card" onclick="showAttractions('abu_dhabi')">
+                <img src="abu-dhabi.jpg" alt="Abu Dhabi">
+                <h3>Abu Dhabi</h3>
+            </div>
+            <div class="card" onclick="showAttractions('sharjah')">
+                <img src="sharjah.jpg" alt="Sharjah">
+                <h3>Sharjah</h3>
+            </div>
+            <div class="card" onclick="showAttractions('Fujairah')">
+                <img src="Fujairah.jpg" alt="Fujairah">
+                <h3>Fujairah</h3>
+            </div>
+            <div class="card" onclick="showAttractions('Ras Al-Khaima')">
+                <img src="ras-al-khaima.jpg" alt="Ras Al-Khaima">
+                <h3>Ras Al-Khaima</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-attractions">
+        <h2>Top Attractions</h2>
+        <div id="attractions" class="card-container">
+            <div class="card">
+                <img src="future.jpg" alt="Museum of the Future">
+                <h3>Museum of the Future</h3>
+            </div>
+            <div class="card">
+                <img src="frame.jpg" alt="Dubai Frame">
+                <h3>Dubai Frame</h3>
+            </div>
+            <div class="card">
+                <img src="fall.webp" alt="Dubai Mall">
+                <h3>Dubai Mall</h3>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showAttractions(city) {
+
+            const attractions = document.getElementById('attractions');
+            if (city === 'dubai') {
+                attractions.innerHTML = '';
+                attractions.style.display = 'flex';
+                attractions.innerHTML = `
+                    <div class="card">
+                        <img src="future.jpg" alt="Museum of the Future">
+                        <h3>Museum of the Future</h3>
+                    </div>
+                    <div class="card">
+                        <img src="frame.jpg" alt="Dubai Frame">
+                        <h3>Dubai Frame</h3>
+                    </div>
+                    <div class="card">
+                        <img src="fall.webp" alt="Dubai Mall">
+                        <h3>Dubai Mall</h3>
+                    </div>
+                    <div class="card">
+                        <img src="burj-khalifa.jpg" alt="Burj Khalifa">
+                        <h3>Burj Khalifa</h3>
+                    </div>
+                    <div class="card">
+                        <img src="burj-arab.jpg" alt="Burj Arab">
+                        <h3>Burj Arab</h3>
+                    </div>
+                    <div class="card">
+                        <img src="desert-safari.jpg" alt="Desert Safari">
+                        <h3>Desert Safari</h3>
+                    </div>
+                    <div class="card">
+                        <img src="Palm-jumeirah.jpg" alt="Plam jumeirah">
+                        <h3>Plam jumeirah</h3>
+                    </div>
+                    <div class="card">
+                        <img src="dubai-aq-zoo.jpg" alt="Dubai Aquarium & Zoo">
+                        <h3>Dubai Aquarium & Zoo</h3>
+                    </div>`;
+                attractions.scrollIntoView({ behavior: 'smooth' });
+            } else if (city === 'abu_dhabi') {
+                attractions.innerHTML = '';
+                attractions.style.display = 'flex';
+                attractions.innerHTML = `
+                    <div class="card">
+                        <img src="sheikh-zayd.jpg" alt="Sheikh Zayed Mosque">
+                        <h3>Sheikh Zayed Mosque</h3>
+                    </div>
+                    <div class="card">
+                        <img src="lov.jpg" alt="Louvre Abu Dhabi">
+                        <h3>Louvre Abu Dhabi</h3>
+                    </div>
+                    <div class="card">
+                        <img src="ferrari.webp" alt="Ferrari Theme Park">
+                        <h3>Ferrari Theme Park</h3>
+                    </div>
+                    
+                    <div class="card">
+                        <img src="warner-Bros.jpg" alt="Warner Bros. World">
+                        <h3>Warner Bros. World</h3>
+                    </div>
+                    <div class="card">
+                        <img src="yas-mall.webp" alt="Warner Bros. World">
+                        <h3>Yas Mall</h3>
+                    </div>
+                    <div class="card">
+                        <img src="palace.jpg" alt="Warner Bros. World">
+                        <h3>Emirates Palace</h3>
+                    </div>`;
+
+                attractions.scrollIntoView({ behavior: 'smooth' });
+            } else if (city === 'sharjah') {
+                attractions.innerHTML = '';
+                attractions.style.display = 'flex';
+                attractions.innerHTML = `
+                    <div class="card">
+                        <img src="sharjah-aq.jpg" alt="Sharjah Art Museum">
+                        <h3>Sharjah Aquarium</h3>
+                    </div>
+                    <div class="card">
+                        <img src="alnoor.jpg" alt="Al Noor Island">
+                        <h3>Al Noor Mosque</h3>
+                    </div>`;
+                attractions.scrollIntoView({ behavior: 'smooth' });
+            } else if (city === 'Fujairah') {
+                attractions.innerHTML = '';
+                attractions.style.display = 'flex';
+                attractions.innerHTML = `
+                    <div class="card">
+                        <img src="Khor-fakkan.jpg" alt="Khor Fakkan">
+                        <h3>Khor Fakkan</h3>
+                    </div>
+                   <div class="card">
+                        <img src="waadi-shees.webp" alt="Waadi Shees">
+                        <h3>Waadi Shees</h3>
+                    </div>
+                    
+                    <div class="card">
+                        <img src="Umbrella-beach.jpg" alt="Umbrella Beach">
+                        <h3>Umbrella Beach</h3>
+                    </div>`;
+                attractions.scrollIntoView({ behavior: 'smooth' });
+            }
+            else if (city === 'Ras Al-Khaima') {
+                attractions.innerHTML = '';
+                attractions.style.display = 'flex';
+                attractions.innerHTML = `
+                    <div class="card">
+                        <img src="jebel-jias.jpg" alt="Jebel Jais">
+                        <h3>Jebel Jais</h3>
+                    </div>
+                   `;
+                attractions.scrollIntoView({ behavior: 'smooth' });
+            }
+            else {
+                attractions.innerHTML = '';
+            }
+        }
+
+
+        function togglePopup() {
+            const popup = document.getElementById('contactPopup');
+            if (popup.style.display === 'block') {
+                popup.style.display = 'none';
+            } else {
+                popup.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+
+</html>
